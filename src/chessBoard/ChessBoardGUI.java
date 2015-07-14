@@ -78,6 +78,7 @@ public class ChessBoardGUI{
 
 	public static void main(String[] args) {
 				createAndDisplay();
+				System.out.println("HELLO");
 	}
 
 }
