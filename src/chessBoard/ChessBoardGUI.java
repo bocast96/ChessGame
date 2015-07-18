@@ -71,14 +71,13 @@ public class ChessBoardGUI{
 	    board.setLocation(upperLeftCornerX, upperLeftCornerY);
 		board.setVisible(true);
 		Game game = new Game(GUI.getSquares());
-		game.chooseColor();
-		game.populateBoard();
+		game.setGame();
+		game.playerMove();
 		
 	}
 
 	public static void main(String[] args) {
 				createAndDisplay();
-				System.out.println("HELLO test");
 	}
 
 }

@@ -3,6 +3,7 @@ package model;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -48,17 +49,24 @@ public class King extends Piece{
 		
 	}
 	
-	public void possibleMoves(JButton[][] board, Piece[][] game) {
+	@Override
+	public JButton[] possibleMoves(JButton[][] board, Piece[][] game) {
 		int[] x = {0,1,1,1,0,-1,-1,-1};
 		int[] y = {1,1,0,-1,-1,-1,0,1};
+		LinkedList<JButton> list = new LinkedList<JButton>();
 		
 		for (int n = 0; n < 8; n++) {
 			int i = row + x[n], j = col + y[n];
 			if (i >= 0 && i < 8 && j >= 0 && j < 8) {
 				if (game[i][j] == null || game[i][j].color != color) {
 					board[i][j].setBorderPainted(true);
+					list.add(board[i][j]);
 				}
 			}
-		}		
+		}
+		
+		return list.toArray(new JButton[0]);
 	}
+
+
 }

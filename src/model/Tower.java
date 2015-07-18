@@ -3,6 +3,7 @@ package model;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -48,10 +49,13 @@ public class Tower extends Piece{
 		
 	}
 	
-	public void possibleMoves(JButton[][] board, Piece[][] game) {
+	public JButton[] possibleMoves(JButton[][] board, Piece[][] game) {
+		LinkedList<JButton> list = new LinkedList<JButton>();
+		
 		for (int i = row + 1; i < 8; i++) {
 			if (game[i][col] == null  || game[i][col].getColor() != color) {
 				board[i][col].setBorderPainted(true);
+				list.add(board[i][col]);
 			} else {
 				break;
 			}
@@ -59,6 +63,7 @@ public class Tower extends Piece{
 		for (int i = row -1; i >= 0; i--) {
 			if (game[i][col] == null || game[i][col].getColor() != color) {
 				board[i][col].setBorderPainted(true);
+				list.add(board[i][col]);
 			} else {
 				break;
 			}
@@ -66,6 +71,7 @@ public class Tower extends Piece{
 		for (int i = col + 1; i < 8; i++) {
 			if (game[row][i] == null || game[row][i].getColor() != color) {
 				board[row][i].setBorderPainted(true);
+				list.add(board[row][i]);
 			} else {
 				break;
 			}
@@ -73,10 +79,13 @@ public class Tower extends Piece{
 		for (int i = col -1; i >= 0; i--) {
 			if (game[row][i] == null || game[row][i].getColor() != color) {
 				board[row][i].setBorderPainted(true);
+				list.add(board[row][i]);
 			} else {
 				break;
 			}
 		}
+		
+		return list.toArray(new JButton[0]);
 	}
 
 }

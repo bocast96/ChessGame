@@ -3,6 +3,7 @@ package model;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -10,7 +11,6 @@ import javax.swing.JButton;
 
 public class Bishop extends Piece{
 	private ImageIcon bishop;
-	private int row, col, color;
 	
 	public Bishop(int color, int row, int col) {
 		super(color, row, col);
@@ -41,18 +41,6 @@ public class Bishop extends Piece{
 		}
 	}
 	
-	public int getColor() {
-		return color;
-	}
-
-	public void setRow(int row) {
-		this.row = row;
-	}
-
-	public void setCol(int col) {
-		this.col = col;
-	}
-
 	public ImageIcon getIcon() {
 		return bishop;
 	}
@@ -61,11 +49,13 @@ public class Bishop extends Piece{
 		
 	}
 	
-	public void possibleMoves(JButton[][] board, Piece[][] game) {
+	public JButton[] possibleMoves(JButton[][] board, Piece[][] game) {
+		LinkedList<JButton> list = new LinkedList<JButton>();
 		
 		for (int i = row + 1, j = col + 1; i < 8 && j < 8; i++, j++) {
 			if (game[i][j] == null || game[i][j].getColor() != color) {
 				board[i][j].setBorderPainted(true);
+				list.add(board[i][j]);
 			} else {
 				break;
 			}
@@ -73,6 +63,7 @@ public class Bishop extends Piece{
 		for (int i = row + 1, j = col - 1; i < 8 && j >= 0; i++, j--) {
 			if (game[i][j] == null || game[i][j].getColor() != color) {
 				board[i][j].setBorderPainted(true);
+				list.add(board[i][j]);
 			} else {
 				break;
 			}
@@ -80,6 +71,7 @@ public class Bishop extends Piece{
 		for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
 			if (game[i][j] == null || game[i][j].getColor() != color) {
 				board[i][j].setBorderPainted(true);
+				list.add(board[i][j]);
 			} else {
 				break;
 			}
@@ -87,10 +79,13 @@ public class Bishop extends Piece{
 		for (int i = row - 1, j = col + 1; i >= 0 && j < 8; i--, j++) {
 			if (game[i][j] == null || game[i][j].getColor() != color) {
 				board[i][j].setBorderPainted(true);
+				list.add(board[i][j]);
 			} else {
 				break;
 			}
 		}
+		
+		return list.toArray(new JButton[0]);
 	}
 
 }

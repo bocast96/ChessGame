@@ -1,6 +1,7 @@
 package model;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 
 public abstract class Piece {
 	int row, col, color;
@@ -38,4 +39,6 @@ public abstract class Piece {
 	public abstract void makeMove();
 
 	public abstract ImageIcon getIcon();
+	
+	public abstract JButton[] possibleMoves(JButton[][] board, Piece[][] game);
 }

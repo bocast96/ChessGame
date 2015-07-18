@@ -18,6 +18,8 @@ public class Game {
 	private Piece[][] game;
 	private int playerColor, AIColor;
 	private Random rand;
+	private Piece[] playerTeam, AITeam;
+	Player player;
 	
 	public Game(JButton[][] board) {
 		this.board = board;
@@ -25,7 +27,14 @@ public class Game {
 		rand = new Random();
 	}
 	
-	public void chooseColor() {
+	public void setGame() {
+		chooseColor();
+		populateBoard();
+		setTeams();
+		player = new Player(playerTeam, game, board);
+	}
+	
+	private void chooseColor() {
 		String[] options = {"White", "Black", "Green", "Red", "Yellow"};
 		playerColor = JOptionPane.showOptionDialog(null, "Choose a Color!", "Lets get Started!", 
 						JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
@@ -35,7 +44,7 @@ public class Game {
 		} while (playerColor == AIColor);
 	}
 	
-	public void populateBoard() {
+	private void populateBoard() {
 		int color = playerColor, i = 7;
 		
 		for (int temp = 1 ; temp < 3 ; temp++) {
@@ -78,6 +87,23 @@ public class Game {
 			color = AIColor;
 			player = false;
 		}
+	}
+	
+	private void setTeams() {
+		playerTeam = new Piece[16];
+		AITeam = new Piece[16];
+		
+		for (int j = 0; j < 8; j++) {
+			AITeam[j] = game[0][j];
+			AITeam[j+8] = game[1][j];
+			playerTeam[j] = game[6][j];
+			playerTeam[j+8] = game[7][j];
+		}
+	}
+	
+	public void playerMove() {
+		player.teamAction();
+		
 	}
 	
 }
