@@ -13,7 +13,7 @@ public class Tower extends Piece{
 	private ImageIcon tower;
 	
 	public Tower(int color, int row, int col) {
-		super(color, row, col);
+		super("Tower", color, row, col);
 		String path = "resources/";
 		switch (color) {
 		case 1:
@@ -49,13 +49,13 @@ public class Tower extends Piece{
 		
 	}
 	
-	public JButton[] possibleMoves(JButton[][] board, Piece[][] game) {
-		LinkedList<JButton> list = new LinkedList<JButton>();
+	public Pair[] possibleMoves(JButton[][] board, Piece[][] game) {
+		LinkedList<Pair> list = new LinkedList<Pair>();
 		
 		for (int i = row + 1; i < 8; i++) {
 			if (game[i][col] == null  || game[i][col].getColor() != color) {
 				board[i][col].setBorderPainted(true);
-				list.add(board[i][col]);
+				list.add(new Pair(i,col));
 			} else {
 				break;
 			}
@@ -63,7 +63,7 @@ public class Tower extends Piece{
 		for (int i = row -1; i >= 0; i--) {
 			if (game[i][col] == null || game[i][col].getColor() != color) {
 				board[i][col].setBorderPainted(true);
-				list.add(board[i][col]);
+				list.add(new Pair(i,col));
 			} else {
 				break;
 			}
@@ -71,7 +71,7 @@ public class Tower extends Piece{
 		for (int i = col + 1; i < 8; i++) {
 			if (game[row][i] == null || game[row][i].getColor() != color) {
 				board[row][i].setBorderPainted(true);
-				list.add(board[row][i]);
+				list.add(new Pair(row,i));
 			} else {
 				break;
 			}
@@ -79,13 +79,13 @@ public class Tower extends Piece{
 		for (int i = col -1; i >= 0; i--) {
 			if (game[row][i] == null || game[row][i].getColor() != color) {
 				board[row][i].setBorderPainted(true);
-				list.add(board[row][i]);
+				list.add(new Pair(row,i));
 			} else {
 				break;
 			}
 		}
 		
-		return list.toArray(new JButton[0]);
+		return list.toArray(new Pair[0]);
 	}
 
 }

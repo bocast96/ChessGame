@@ -19,19 +19,25 @@ public class Game {
 	private int playerColor, AIColor;
 	private Random rand;
 	private Piece[] playerTeam, AITeam;
+	private boolean turnTaken;
 	Player player;
+
 	
 	public Game(JButton[][] board) {
 		this.board = board;
 		game = new Piece[8][8];
 		rand = new Random();
 	}
-	
+
+	public void setTurnTaken(boolean turnTaken) {
+		this.turnTaken = turnTaken;
+	}
+
 	public void setGame() {
 		chooseColor();
 		populateBoard();
 		setTeams();
-		player = new Player(playerTeam, game, board);
+		player = new Player(playerTeam, game, board, this);
 	}
 	
 	private void chooseColor() {
@@ -102,8 +108,29 @@ public class Game {
 	}
 	
 	public void playerMove() {
-		player.teamAction();
-		
+		turnTaken = false;
+		System.out.println("Taking a turn ------------------------------------------------------------------");
+		player.turn();
+		do {
+			if (turnTaken) {
+				System.out.println("Taking a turn ------------------------------------------------------------------");
+				player.turn();
+				turnTaken = false;
+			}
+		} while (true);
+
 	}
-	
+
+	public void printGame() {
+		for (Piece[] row : game) {
+			for (Piece piece : row) {
+				if (piece == null) {
+					System.out.print(" NULL ");
+				} else {
+					System.out.print(piece.toString() + " ");
+				}
+			}
+			System.out.println();
+		}
+	}
 }

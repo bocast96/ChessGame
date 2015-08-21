@@ -14,7 +14,7 @@ public class Pawn extends Piece{
 	private boolean firstMove, playerPawn;
 	
 	public Pawn(int color, int row, int col, boolean playerPawn) {
-		super(color, row, col);
+		super("Pawn",color, row, col);
 		firstMove = true;
 		this.playerPawn = playerPawn;
 		String path = "resources/";
@@ -52,37 +52,37 @@ public class Pawn extends Piece{
 		
 	}
 	
-	public JButton[] possibleMoves(JButton[][] board, Piece[][] game) {
+	public Pair[] possibleMoves(JButton[][] board, Piece[][] game) {
 		int x = playerPawn ? -1 : 1;
 		int i = row + x, j1 = col - 1, j2 = col + 1;
-		LinkedList<JButton> list = new LinkedList<JButton>();
+		LinkedList<Pair> list = new LinkedList<Pair>();
 		
 		if (i >= 0 && i < 8) {
 			if (game[i][col] == null || game[i][col].getColor() != color) {
 				board[i][col].setBorderPainted(true);
-				list.add(board[i][col]);
+				list.add(new Pair(i,col));
 			}
 		}
 		
 		if (j1 >= 0 && game[i][j1] != null && game[i][j1].getColor() != color) {
 			board[i][j1].setBorderPainted(true);
-			list.add(board[i][j1]);
+			list.add(new Pair(i,j1));
 		}
 		
 		if (j2 < 8 && game[i][j2] != null && game[i][j2].getColor() != color) {
 			board[i][j2].setBorderPainted(true);
-			list.add(board[i][j2]);
+			list.add(new Pair(i,j2));
 		}
 		
 		if (firstMove) {
 			i += x;
 			if (game[i][col] == null || game[i][col].getColor() != color) {
 				board[i][col].setBorderPainted(true);
-				list.add(board[i][col]);
+				list.add(new Pair(i,col));
 			}
 		}
 		
-		return list.toArray(new JButton[0]);
+		return list.toArray(new Pair[0]);
 	}
 
 }

@@ -13,7 +13,7 @@ public class King extends Piece{
 	private ImageIcon king;
 	
 	public King(int color, int row, int col) {
-		super(color, row, col);
+		super("King", color, row, col);
 		String path = "resources/";
 		switch (color) {
 		case 1:
@@ -50,22 +50,22 @@ public class King extends Piece{
 	}
 	
 	@Override
-	public JButton[] possibleMoves(JButton[][] board, Piece[][] game) {
+	public Pair[] possibleMoves(JButton[][] board, Piece[][] game) {
 		int[] x = {0,1,1,1,0,-1,-1,-1};
 		int[] y = {1,1,0,-1,-1,-1,0,1};
-		LinkedList<JButton> list = new LinkedList<JButton>();
+		LinkedList<Pair> list = new LinkedList<Pair>();
 		
 		for (int n = 0; n < 8; n++) {
 			int i = row + x[n], j = col + y[n];
 			if (i >= 0 && i < 8 && j >= 0 && j < 8) {
 				if (game[i][j] == null || game[i][j].color != color) {
 					board[i][j].setBorderPainted(true);
-					list.add(board[i][j]);
+					list.add(new Pair(i,j));
 				}
 			}
 		}
 		
-		return list.toArray(new JButton[0]);
+		return list.toArray(new Pair[0]);
 	}
 
 

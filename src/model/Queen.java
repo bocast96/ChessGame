@@ -12,8 +12,8 @@ import javax.swing.JButton;
 public class Queen extends Piece{
 	private ImageIcon queen;
 	
-	public Queen(int color, int row, int col) {
-		super(color, row, col);	
+	public Queen( int color, int row, int col) {
+		super("Queen", color, row, col);
 		String path = "resources/";
 		switch (color) {
 		case 1:
@@ -49,13 +49,13 @@ public class Queen extends Piece{
 		
 	}
 
-	public JButton[] possibleMoves(JButton[][] board, Piece[][] game) {
-		LinkedList<JButton> list = new LinkedList<JButton>();
+	public Pair[] possibleMoves(JButton[][] board, Piece[][] game) {
+		LinkedList<Pair> list = new LinkedList<Pair>();
 		
 		for (int i = row + 1; i < 8; i++) {
 			if (game[i][col] == null || game[i][col].color != color) {
 				board[i][col].setBorderPainted(true);
-				list.add(board[i][col]);
+				list.add(new Pair(i,col));
 			} else {
 				break;
 			}
@@ -63,7 +63,7 @@ public class Queen extends Piece{
 		for (int i = row -1; i >= 0; i--) {
 			if (game[i][col] == null || game[i][col].color != color) {
 				board[i][col].setBorderPainted(true);
-				list.add(board[i][col]);
+				list.add(new Pair(i,col));
 			} else {
 				break;
 			}
@@ -71,7 +71,7 @@ public class Queen extends Piece{
 		for (int i = col + 1; i < 8; i++) {
 			if (game[row][i] == null || game[row][i].color != color) {
 				board[row][i].setBorderPainted(true);
-				list.add(board[row][i]);
+				list.add(new Pair(row,i));
 			} else {
 				break;
 			}
@@ -79,7 +79,7 @@ public class Queen extends Piece{
 		for (int i = col -1; i >= 0; i--) {
 			if (game[row][i] == null || game[row][i].color != color) {
 				board[row][i].setBorderPainted(true);
-				list.add(board[row][i]);
+				list.add(new Pair(row,i));
 			} else {
 				break;
 			}
@@ -87,7 +87,7 @@ public class Queen extends Piece{
 		for (int i = row + 1, j = col + 1; i < 8 && j < 8; i++, j++) {
 			if (game[i][j] == null || game[i][j].color != color) {
 				board[i][j].setBorderPainted(true);
-				list.add(board[i][j]);
+				list.add(new Pair(i,j));
 			} else {
 				break;
 			}
@@ -95,7 +95,7 @@ public class Queen extends Piece{
 		for (int i = row + 1, j = col - 1; i < 8 && j >= 0; i++, j--) {
 			if (game[i][j] == null || game[i][j].color != color) {
 				board[i][j].setBorderPainted(true);
-				list.add(board[i][j]);
+				list.add(new Pair(i,j));
 			} else {
 				break;
 			}
@@ -103,7 +103,7 @@ public class Queen extends Piece{
 		for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
 			if (game[i][j] == null || game[i][j].color != color) {
 				board[i][j].setBorderPainted(true);
-				list.add(board[i][j]);
+				list.add(new Pair(i,j));
 			} else {
 				break;
 			}
@@ -111,12 +111,12 @@ public class Queen extends Piece{
 		for (int i = row - 1, j = col + 1; i >= 0 && j < 8; i--, j++) {
 			if (game[i][j] == null || game[i][j].color != color) {
 				board[i][j].setBorderPainted(true);
-				list.add(board[i][j]);
+				list.add(new Pair(i,j));
 			} else {
 				break;
 			}
 		}
 		
-		return list.toArray(new JButton[0]);
+		return list.toArray(new Pair[0]);
 	}
 }

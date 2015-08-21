@@ -13,7 +13,7 @@ public class Bishop extends Piece{
 	private ImageIcon bishop;
 	
 	public Bishop(int color, int row, int col) {
-		super(color, row, col);
+		super("Bishop", color, row, col);
 		String path = "resources/";
 		switch (color) {
 		case 1:
@@ -49,13 +49,13 @@ public class Bishop extends Piece{
 		
 	}
 	
-	public JButton[] possibleMoves(JButton[][] board, Piece[][] game) {
-		LinkedList<JButton> list = new LinkedList<JButton>();
+	public Pair[] possibleMoves(JButton[][] board, Piece[][] game) {
+		LinkedList<Pair> list = new LinkedList<Pair>();
 		
 		for (int i = row + 1, j = col + 1; i < 8 && j < 8; i++, j++) {
 			if (game[i][j] == null || game[i][j].getColor() != color) {
 				board[i][j].setBorderPainted(true);
-				list.add(board[i][j]);
+				list.add(new Pair(i,j));
 			} else {
 				break;
 			}
@@ -63,7 +63,7 @@ public class Bishop extends Piece{
 		for (int i = row + 1, j = col - 1; i < 8 && j >= 0; i++, j--) {
 			if (game[i][j] == null || game[i][j].getColor() != color) {
 				board[i][j].setBorderPainted(true);
-				list.add(board[i][j]);
+				list.add(new Pair(i,j));
 			} else {
 				break;
 			}
@@ -71,7 +71,7 @@ public class Bishop extends Piece{
 		for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
 			if (game[i][j] == null || game[i][j].getColor() != color) {
 				board[i][j].setBorderPainted(true);
-				list.add(board[i][j]);
+				list.add(new Pair(i,j));
 			} else {
 				break;
 			}
@@ -79,13 +79,13 @@ public class Bishop extends Piece{
 		for (int i = row - 1, j = col + 1; i >= 0 && j < 8; i--, j++) {
 			if (game[i][j] == null || game[i][j].getColor() != color) {
 				board[i][j].setBorderPainted(true);
-				list.add(board[i][j]);
+				list.add(new Pair(i,j));
 			} else {
 				break;
 			}
 		}
 		
-		return list.toArray(new JButton[0]);
+		return list.toArray(new Pair[0]);
 	}
 
 }
