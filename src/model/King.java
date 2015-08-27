@@ -67,6 +67,4 @@ public class King extends Piece{
 		
 		return list.toArray(new Pair[0]);
 	}
-
-
 }

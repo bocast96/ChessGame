@@ -53,33 +53,41 @@ public class Bishop extends Piece{
 		LinkedList<Pair> list = new LinkedList<Pair>();
 		
 		for (int i = row + 1, j = col + 1; i < 8 && j < 8; i++, j++) {
-			if (game[i][j] == null || game[i][j].getColor() != color) {
-				board[i][j].setBorderPainted(true);
-				list.add(new Pair(i,j));
+			if (game[i][j] == null) {
+				add(board, list, i, j);
+			} else if (game[i][j].getColor() != color) {
+				add(board,list,i,j);
+				break;
 			} else {
 				break;
 			}
 		}
 		for (int i = row + 1, j = col - 1; i < 8 && j >= 0; i++, j--) {
-			if (game[i][j] == null || game[i][j].getColor() != color) {
-				board[i][j].setBorderPainted(true);
-				list.add(new Pair(i,j));
+			if (game[i][j] == null) {
+				add(board, list, i, j);
+			} else if (game[i][j].getColor() != color) {
+				add(board,list,i,j);
+				break;
 			} else {
 				break;
 			}
 		}
 		for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
-			if (game[i][j] == null || game[i][j].getColor() != color) {
-				board[i][j].setBorderPainted(true);
-				list.add(new Pair(i,j));
+			if (game[i][j] == null) {
+				add(board, list, i, j);
+			} else if (game[i][j].getColor() != color) {
+				add(board,list,i,j);
+				break;
 			} else {
 				break;
 			}
 		}
 		for (int i = row - 1, j = col + 1; i >= 0 && j < 8; i--, j++) {
-			if (game[i][j] == null || game[i][j].getColor() != color) {
-				board[i][j].setBorderPainted(true);
-				list.add(new Pair(i,j));
+			if (game[i][j] == null) {
+				add(board, list, i, j);
+			} else if (game[i][j].getColor() != color) {
+				add(board,list,i,j);
+				break;
 			} else {
 				break;
 			}
@@ -88,4 +96,8 @@ public class Bishop extends Piece{
 		return list.toArray(new Pair[0]);
 	}
 
+	private void add(JButton[][] board, LinkedList<Pair> list, int i, int j) {
+		board[i][j].setBorderPainted(true);
+		list.add(new Pair(i,j));
+	}
 }

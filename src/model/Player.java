@@ -84,6 +84,9 @@ public class Player {
 		board[row][col].setIcon(selected.getIcon());
 		g.setTurnTaken(true);
 		g.printGame();
+		if (selected instanceof Pawn) {
+			((Pawn) selected).setFirstMove(false);
+		}
 	}
 	
 	public void makeMove() {

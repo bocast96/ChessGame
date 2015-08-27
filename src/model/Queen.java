@@ -53,70 +53,92 @@ public class Queen extends Piece{
 		LinkedList<Pair> list = new LinkedList<Pair>();
 		
 		for (int i = row + 1; i < 8; i++) {
-			if (game[i][col] == null || game[i][col].color != color) {
-				board[i][col].setBorderPainted(true);
-				list.add(new Pair(i,col));
+			if (game[i][col] == null) {
+				add(board, list, i, col);
+			} else if (game[i][col].getColor() != color) {
+				add(board,list,i,col);
+				break;
 			} else {
 				break;
 			}
 		}
 		for (int i = row -1; i >= 0; i--) {
-			if (game[i][col] == null || game[i][col].color != color) {
-				board[i][col].setBorderPainted(true);
-				list.add(new Pair(i,col));
+			if (game[i][col] == null) {
+				add(board, list, i, col);
+			} else if (game[i][col].getColor() != color) {
+				add(board,list,i,col);
+				break;
 			} else {
 				break;
 			}
 		}
 		for (int i = col + 1; i < 8; i++) {
-			if (game[row][i] == null || game[row][i].color != color) {
-				board[row][i].setBorderPainted(true);
-				list.add(new Pair(row,i));
+			if (game[row][i] == null) {
+				add(board, list, row, i);
+			} else if (game[row][i].getColor() != color) {
+				add(board,list,row,i);
+				break;
 			} else {
 				break;
 			}
 		}
 		for (int i = col -1; i >= 0; i--) {
-			if (game[row][i] == null || game[row][i].color != color) {
-				board[row][i].setBorderPainted(true);
-				list.add(new Pair(row,i));
+			if (game[row][i] == null) {
+				add(board, list, row, i);
+			} else if (game[row][i].getColor() != color) {
+				add(board,list,row,i);
+				break;
 			} else {
 				break;
 			}
 		}
+//<------------------ diagonal moves -------------------------------------------------->
 		for (int i = row + 1, j = col + 1; i < 8 && j < 8; i++, j++) {
-			if (game[i][j] == null || game[i][j].color != color) {
-				board[i][j].setBorderPainted(true);
-				list.add(new Pair(i,j));
+			if (game[i][j] == null) {
+				add(board, list, i, j);
+			} else if (game[i][j].getColor() != color) {
+				add(board,list,i,j);
+				break;
 			} else {
 				break;
 			}
 		}
 		for (int i = row + 1, j = col - 1; i < 8 && j >= 0; i++, j--) {
-			if (game[i][j] == null || game[i][j].color != color) {
-				board[i][j].setBorderPainted(true);
-				list.add(new Pair(i,j));
+			if (game[i][j] == null) {
+				add(board, list, i, j);
+			} else if (game[i][j].getColor() != color) {
+				add(board,list,i,j);
+				break;
 			} else {
 				break;
 			}
 		}
 		for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
-			if (game[i][j] == null || game[i][j].color != color) {
-				board[i][j].setBorderPainted(true);
-				list.add(new Pair(i,j));
+			if (game[i][j] == null) {
+				add(board, list, i, j);
+			} else if (game[i][j].getColor() != color) {
+				add(board,list,i,j);
+				break;
 			} else {
 				break;
 			}
 		}
 		for (int i = row - 1, j = col + 1; i >= 0 && j < 8; i--, j++) {
-			if (game[i][j] == null || game[i][j].color != color) {
-				board[i][j].setBorderPainted(true);
-				list.add(new Pair(i,j));
+			if (game[i][j] == null) {
+				add(board, list, i, j);
+			} else if (game[i][j].getColor() != color) {
+				add(board,list,i,j);
+				break;
 			} else {
 				break;
 			}
 		}
 		
 		return list.toArray(new Pair[0]);
+	}
+
+	private void add(JButton[][] board, LinkedList<Pair> list, int i, int j) {
+		board[i][j].setBorderPainted(true);
+		list.add(new Pair(i,j));
 	}
 }
