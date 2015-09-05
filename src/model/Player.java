@@ -2,6 +2,8 @@ package model;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -11,7 +13,7 @@ import javax.swing.JButton;
  *
  */
 public class Player {
-	Piece[] team;
+	ArrayList<Piece> team;
 	Piece[][] game;
 	Piece selected;
 	JButton[][] board;
@@ -19,14 +21,14 @@ public class Player {
 	ImageIcon icon;
 	Game g;
 
-	public Player(Piece[] playerTeam, Piece[][] game, JButton[][] board, Game g) {
+	public Player(ArrayList<Piece> playerTeam, Piece[][] game, JButton[][] board, Game g) {
 		this.team = playerTeam;
 		this.game = game;
 		this.board = board;
 		this.g = g;
 	}
 
-	private void clearBoard() {
+	public void clearBoard() {
 		for (JButton[] row : board) {
 			for (JButton b : row) {
 				b.setBorderPainted(false);
@@ -79,14 +81,17 @@ public class Player {
 		clearMoves();
 		board[selected.getRow()][selected.getCol()].setIcon(null);
 		game[selected.getRow()][selected.getCol()] = null;
+
+		if (game[row][col] != null) {
+			g.battle(selected, game[row][col]);
+		}
 		selected.setRow(row); selected.setCol(col);                                                   
 		game[row][col] = selected;
 		board[row][col].setIcon(selected.getIcon());
-		g.setTurnTaken(true);
-		g.printGame();
 		if (selected instanceof Pawn) {
 			((Pawn) selected).setFirstMove(false);
 		}
+		g.setAITurn(true);
 	}
 	
 	public void makeMove() {
@@ -103,6 +108,5 @@ public class Player {
 	
 	public void turn() {
 		teamAction();
-		
 	}
 }

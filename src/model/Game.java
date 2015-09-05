@@ -1,26 +1,21 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
-
-import model.Pawn;
-import model.Bishop;
-import model.King;
-import model.Knight;
-import model.Queen;
-import model.Tower;
-import model.Piece;
 
 public class Game {
 	private JButton[][] board;
 	private Piece[][] game;
 	private int playerColor, AIColor;
 	private Random rand;
-	private Piece[] playerTeam, AITeam;
-	private boolean turnTaken;
+	private ArrayList<Piece> playerTeam, AITeam;
+	private boolean playerTurn;
+	private boolean AITurn;
 	Player player;
+	AIControl aiControl;
 
 	
 	public Game(JButton[][] board) {
@@ -29,15 +24,18 @@ public class Game {
 		rand = new Random();
 	}
 
-	public void setTurnTaken(boolean turnTaken) {
-		this.turnTaken = turnTaken;
+	public void setPlayerTurn(boolean playerTurn) {
+		this.playerTurn = playerTurn;
 	}
+
+	public void setAITurn(boolean AITurn) {this.AITurn = AITurn;}
 
 	public void setGame() {
 		chooseColor();
 		populateBoard();
 		setTeams();
 		player = new Player(playerTeam, game, board, this);
+		aiControl = new AIControl(AITeam,player,board,game,this);
 	}
 	
 	private void chooseColor() {
@@ -96,26 +94,31 @@ public class Game {
 	}
 	
 	private void setTeams() {
-		playerTeam = new Piece[16];
-		AITeam = new Piece[16];
+		playerTeam = new ArrayList<>();
+		AITeam = new ArrayList<>();
 		
 		for (int j = 0; j < 8; j++) {
-			AITeam[j] = game[0][j];
-			AITeam[j+8] = game[1][j];
-			playerTeam[j] = game[6][j];
-			playerTeam[j+8] = game[7][j];
+			AITeam.add(game[0][j]);
+			AITeam.add(game[1][j]);
+			playerTeam.add(game[6][j]);
+			playerTeam.add(game[7][j]);
 		}
 	}
 	
 	public void playerMove() {
-		turnTaken = false;
+		playerTurn = false;
 		System.out.println("Taking a turn ------------------------------------------------------------------");
 		player.turn();
 		do {
-			if (turnTaken) {
+			if (AITurn) {
+				System.out.println("Taking AI turn ===============================================================");
+				aiControl.turn();
+				AITurn = false;
+			}
+			if (playerTurn) {
 				System.out.println("Taking a turn ------------------------------------------------------------------");
 				player.turn();
-				turnTaken = false;
+				playerTurn = false;
 			}
 		} while (true);
 
@@ -131,6 +134,14 @@ public class Game {
 				}
 			}
 			System.out.println();
+		}
+	}
+
+	public void battle(Piece win, Piece lose) {
+		if (playerTeam.contains(win)) {
+			AITeam.remove(lose);
+		} else {
+			playerTeam.remove(lose);
 		}
 	}
 }

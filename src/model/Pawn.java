@@ -82,7 +82,6 @@ public class Pawn extends Piece{
 				if ((game[i][col] == null || game[i][col].getColor() != color)) {
 					board[i][col].setBorderPainted(true);
 					list.add(new Pair(i,col));
-					//firstMove = false;
 				}
 			}
 		}
